@@ -1,2 +1,2 @@
 import os
-os.system('scrapy crawl 36kr')
+os.system('scrapy crawl ifeng')

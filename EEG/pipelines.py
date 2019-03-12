@@ -7,7 +7,6 @@
 import csv
 import datetime
 import os
-import pandas
 
 class EegPipeline(object):
     csv_writer = 0

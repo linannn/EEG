@@ -63,7 +63,7 @@ class SpiderInfo():
             with open('property/keyword_old', 'r+', encoding='utf-8') as f:
                 keyword_old = f.read().split('\n')
                 for i in keyword_old:
-                    if i != '':
+                    if i != '' and i in self.keyword_new:
                         self.keyword_old.add(i)
         except:
             pass
@@ -78,7 +78,7 @@ class SpiderInfo():
             try:
                 self.bloom_dict[spider.name] = bloomfilter.Bloomfilter('property/{}.bloom'.format(spider.name))
             except:
-                self.bloom_dict[spider.name] = bloomfilter.Bloomfilter(100000, 10)
+                self.bloom_dict[spider.name] = bloomfilter.Bloomfilter(100000000, 50)
 
     def set_bloom(self):
         for key, value in self.bloom_dict.items():
