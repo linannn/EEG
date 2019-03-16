@@ -39,6 +39,7 @@ class ThepaperSpider(scrapy.Spider):
         key = response.meta['key']
         href_list = response.xpath('//h2/a')
         for href in href_list:
+            id = href.xpath('./@href').extract()[0]
             url = 'https://www.thepaper.cn/' + href.xpath('./@href').extract()[0]
             if self.bloom.test(url+key):
                 self.conflict_count -=1
@@ -55,6 +56,7 @@ class ThepaperSpider(scrapy.Spider):
                     self.conflict_count = self.confilt_max
                     yield scrapy.Request(
                         url=url,
+                        meta={'id': id, 'key':key},
                         callback=self.parse_detail,
                         dont_filter=True
                     )
@@ -83,5 +85,8 @@ class ThepaperSpider(scrapy.Spider):
         eeg['date'] = date
         eeg['text'] = text
         eeg['source'] = 'thepaper'
+        eeg['id'] = response.meta['id']
+        eeg['key'] = response.meta['key']
+
         yield eeg
 

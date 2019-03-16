@@ -36,6 +36,8 @@ class A36krSpider(scrapy.Spider):
                     eegItem['title'] = item['title'].replace('\t', ' ')
                     eegItem['date'] = item['published_at'].replace('\t', ' ')
                     eegItem['text'] = item['description'].replace('\t', ' ')
+                    eegItem['id'] = item['id']
+                    eegItem['key'] = key
                     self.bloom.add(flag)
                     self.conflict_count = self.confilt_max
                     yield eegItem

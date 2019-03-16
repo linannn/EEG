@@ -15,3 +15,5 @@ class EegItem(scrapy.Item):
     date = scrapy.Field()
     text = scrapy.Field()
     source = scrapy.Field()
+    id = scrapy.Field()
+    key = scrapy.Field()
