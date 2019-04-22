@@ -14,11 +14,11 @@ class EegPipeline(object):
     def __init__(self):
         rootDir = 'result/'
         data = datetime.datetime.now().strftime('%Y-%m-%d')
-        out = open(rootDir+'{}.csv'.format(data), 'a+', newline='', encoding='utf-8')
+        out = open(os.path.join(rootDir,'{}.csv'.format(data)), 'a+', newline='', encoding='utf-8')
         self.csv_write = csv.writer(out, dialect='excel')
-        out_36kr = open(rootDir+'{}.csv'.format(data+'-36kr'), 'a+', newline='', encoding='utf-8')
+        out_36kr = open(os.path.join(rootDir,'{}.csv'.format(data+'-36kr')), 'a+', newline='', encoding='utf-8')
         self.a36kr_writer = csv.writer(out_36kr, dialect='excel')
-        key_id_map = open(rootDir+'key_id_map.csv', 'a+', newline='', encoding='utf-8')
+        key_id_map = open(os.path.join(rootDir, 'key_id_map.csv'), 'a+', newline='', encoding='utf-8')
         self.key_id_map_writer = csv.writer(key_id_map, dialect='excel')
 
 
@@ -39,6 +39,5 @@ class EegPipeline(object):
                                      item['id']]
                                     )
 
-        print(item['key'], item['id'])
         self.key_id_map_writer.writerow([item['key'], item['id']])
         return item

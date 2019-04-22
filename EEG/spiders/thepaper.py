@@ -1,7 +1,7 @@
 # -*- coding: utf-8 -*-
 import scrapy
-import time
 from EEG.items import EegItem
+import logging
 from bloomfilter import bloomfilter
 
 class ThepaperSpider(scrapy.Spider):
@@ -43,9 +43,9 @@ class ThepaperSpider(scrapy.Spider):
             url = 'https://www.thepaper.cn/' + href.xpath('./@href').extract()[0]
             if self.bloom.test(url+key):
                 self.conflict_count -=1
-                print(url)
+                logging.info(url)
                 if self.conflict_count <= 0:
-                    print(key + ' stop')
+                    logging(self.name+' ' + key+ ' stop')
                     return
             else:
                 if self.bloom.test(url):
@@ -63,7 +63,7 @@ class ThepaperSpider(scrapy.Spider):
         page = response.meta['page']
         # if page > 50:
         #     return
-        print(str(page)+key)
+        logging(str(page) + key)
         yield scrapy.Request(
             url = self.base_url2.format(key, page+1),
             meta={'page':page+1,'key':key},
